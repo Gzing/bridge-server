@@ -129,7 +129,7 @@ To deploy a development copy of the site on Heroku, just choose which branch you
 
 | `Master` branch <br>(stable) | `Develop` branch<br> (active development) | 
 |---------|----------|
-| [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/gzing/bridge-server/tree/master) | [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/gzing/bridge-server/tree/one_click_deploy) | 
+| [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/gzing/bridge-server/tree/master) | [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/gzing/bridge-server/tree/one_click_deployment) | 
 
 Heroku will prompt you to set config variables. At a minium, you must set these three:
 
