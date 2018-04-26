@@ -69,6 +69,7 @@ def create_or_update_purchase(payload):
                                                           payload['data'])
     contract = contract_helper.get_instance('Purchase',
                                             purchase_address)
+    print(purchase_address, "+++++++++++++++++++++")
 
     purchase_data = contract.functions.data().call()
     purchase_obj = Purchase.query.filter_by(contract_address=purchase_address).first()

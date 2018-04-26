@@ -1,7 +1,7 @@
 from web3 import Web3, HTTPProvider, TestRPCProvider, WebsocketProvider
 from solc import compile_source
 from web3.contract import ConciseContract
-
+from eth_utils import to_checksum_address
 
 contract_source_code = '''
 pragma solidity ^0.4.11;
@@ -192,7 +192,7 @@ class ContractParser(object):
         self.block_from = block_from
         self.block_to = block_to
         self.contract_address = contract_address
-        self.abi = get_contract_abi('ListingsRegistry')
+        self.abi = get_contract_abi('Purchase')
 
     @property
     def block_reference_dict(self):
@@ -235,17 +235,18 @@ class ContractParser(object):
         })
         return event.get_all_entries()
 
-cusp = ContractParser('ListingPurchased',
-                      '0xf25186b5081ff5ce73482ad761db0eb0d25abfbf')
+cusp = ContractParser('Purchase',
+                      to_checksum_address('0x9deee0195f88caf7dee2fa8a6777f8236d847ef8'))
 
+import pdb
+pdb.set_trace()
+# print(cusp.abi)
 
-print(cusp.abi)
+# l = cusp.get_eventy()
+# print(len(l))
 
-l = cusp.get_eventy()
-print(len(l))
-
-for i in l:
-    print(i)
+# for i in l:
+#     print(i)
 
 # con = c.get_contract().functions.getListing(2).call()
 

@@ -57,8 +57,9 @@ class ContractHelper:
         if event_type == 'NewListing':
             return int(data, 0)
         elif event_type == 'ListingPurchased':
-            return decode_single('address',
+            addr = decode_single('address',
                                  hexbytes.HexBytes(data))
+            return Web3.utils.to_checksum_address(addr)
 
     @staticmethod
     def numeric_eth(str_eth_address):
