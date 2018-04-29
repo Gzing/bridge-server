@@ -34,7 +34,7 @@ flask_app.config.update(
     broker_url=os.environ['REDIS_URL'],
     result_backend=os.environ['REDIS_URL'],
     task_always_eager=os.environ.get('CELERY_DEBUG', False),
-    SQLALCHEMY_DATABASE_URI=settings.SQLALCHEMY_DATABASE_URI,
+    SQLALCHEMY_DATABASE_URI=settings.DATABASE_URL,
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
     SQLALCHEMY_ECHO=False,
 )
@@ -50,7 +50,7 @@ def event_listner():
         event_tracker = db_models.EventTracker(last_read=0)
         db.session.add(event_tracker)
         db.session.commit()
-    ContractHelper().fetch_events(['NewListing(uint256)'],
+    ContractHelper().fetch_events(['NewListing(uint256)', 'ListingPurchased(address)'],
                                   block_from=event_tracker.last_read,
                                   block_to='latest',
                                   f=event_reducer)
@@ -58,5 +58,4 @@ def event_listner():
 
 @celery.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    # run every 2 minutes for now
-    sender.add_periodic_task(20.0, event_listner)
+    sender.add_periodic_task(10.0, event_listner)
