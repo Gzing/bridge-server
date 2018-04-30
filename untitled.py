@@ -199,11 +199,11 @@ class ContractParser(object):
         return {"fromBlock": self.block_from,
                 "toBlock": self.block_to}
 
-    # def get_web3(self):
-    #     return Web3(WebsocketProvider('wss://rinkeby.infura.io/_ws'))
-
     def get_web3(self):
-        return Web3(HTTPProvider('http://127.0.0.1:9545'))
+        return Web3(WebsocketProvider('wss://rinkeby.infura.io/_ws'))
+
+    # def get_web3(self):
+    #     return Web3(HTTPProvider('http://127.0.0.1:9545'))
 
     def get_contract(self):
         contract = self.get_web3().eth.contract(address=self.contract_address,
@@ -225,7 +225,7 @@ class ContractParser(object):
     def get_eventy(self, fetch_new=False):
         w3 = self.get_web3()
         event_name_hashes = []
-        event_names = ['ListingPurchased(address)']
+        event_names = ['NewListing(uint256)']
         for name in event_names:
             event_name_hashes.append(w3.sha3(text=name).hex())
         print(event_name_hashes)
@@ -244,19 +244,8 @@ cusp = ContractParser('Purchase',
 l = cusp.get_eventy()
 print(len(l))
 
-from util.contract import ContractHelper
 for i in l:
-    payload = i
-
-    contract_helper = ContractHelper()
-    purchase_address = contract_helper.convert_event_data('ListingPurchased',
-                                                          payload['data'])
-    contract = contract_helper.get_instance('Purchase',
-                                            purchase_address)
-    print(purchase_address, "+++++++++++++++++++++")
-
-    purchase_data = contract.functions.data().call()
-
+    print(i)
 # con = c.get_contract().functions.getListing(2).call()
 
 # # print(con)
